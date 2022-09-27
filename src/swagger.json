@@ -1,0 +1,199 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge by Wired",
+    "description": "challenge disponibilizado pela Wired, O desafio consiste em um projeto que consiste em um CRUD de usuários",
+    "contact": {
+      "email": "vruan85@gmail.com"
+    },
+    "version": "1.0.0",
+    "servers": [
+      {
+        "url": "http://localhost:3333/",
+        "description": "API da challenge"
+      }
+    ]
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Listagem dos usuários",
+        "description": "Rota responsável por listar os usuários cadastrados",
+        "tags": ["User"],
+        "responses": {
+          "500": {
+            "description": "unknown error"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "list",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Cadastro de Usuário",
+        "description": "Rota responsável por cadastrar usuários",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Ruan",
+                    "dob": "29/07/2004",
+                    "address": "Gavião Peixoto, SP",
+                    "description": "Olá ! sou ruan tenho 18 anos"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "unknown error"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "invalid arguments"
+          }
+        }
+      }
+    },
+    "/user/{id}/delete": {
+      "delete": {
+        "summary": "Deletar Usuário",
+        "description": "Rota responsável por deletar usuários",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário que vai ser excluído",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "not find by this id!"
+          },
+          "500": {
+            "description": "unknown error"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/edit": {
+      "put": {
+        "summary": "Editar Usuário",
+        "description": "Rota responsável por editar usuários",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do usuário que será editado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Victor",
+                    "dob": "29/07/2004",
+                    "address": "Araraquara, SP",
+                    "description": "Olá ! sou ruan tenho 23 anos"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "not find by this id!"
+          },
+          "500": {
+            "description": "unknown error"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "invalid arguments"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "dob": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
